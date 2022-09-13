@@ -1,14 +1,12 @@
-export default class Constant{
-    constructor(){
+export default {
 
-    }
-    static _CUBE_WIDTH = 60
-    static _CUBE_HEIGHT = 60
-    static _EMPTY_CUBE_COLOR = "#1E1E1E"
-    static _FULL_CUBE_COLOR = "#92522E"
-    static _DISABLED_CUBE_COLOR = "#8C6E78"
+    _CUBE_WIDTH : 60,
+    _CUBE_HEIGHT : 60,
+    _EMPTY_CUBE_COLOR : "#1E1E1E",
+    _FULL_CUBE_COLOR : "#92522E",
+    _DISABLED_CUBE_COLOR : "#8C6E78",
 
-    static _FIGURES = [
+    _FIGURES :[
         // n = new line, 1 = cube ,  0 = space
         `1`,`11`,`111`,`1111`,`1111`,
         `1n1`,`1n1n1`,`1n1n1n1n`,`1n1n1n1`,

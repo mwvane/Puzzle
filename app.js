@@ -1,5 +1,5 @@
 import Cube from "./cube.js";
-import Constant from "./constants.js"
+import constant from "./constants.js"
 import Figure from "./figures.js"
 import helpers from "./helpers.js"
 
@@ -20,14 +20,14 @@ function drawTable(parent) {
             let cube = new Cube(startX, startY)
             cube.element.className = "cube"
             parent.append(cube.element)
-            startX += Constant._CUBE_WIDTH + 4
+            startX += constant._CUBE_WIDTH + 4
         }
         startX = 0
-        startY += Constant._CUBE_HEIGHT + 4
+        startY += constant._CUBE_HEIGHT + 4
     }
 }
 function drawFigures(quantity = 3) {
-    let figure = new Figure(Constant._FIGURES)
+    let figure = new Figure(constant._FIGURES)
     let figureContainer = document.getElementsByClassName("figures-container")[0]
     for (let i = 0; i < quantity; i++) {
         let randFigure = figure.Figures[helpers.getRandomNUmber(0, figure.Figures.length)].cloneNode(true)
@@ -40,7 +40,7 @@ function drawFigures(quantity = 3) {
             randFigure.offsetY = e.pageY - randFigure.offsetTop
             window.addEventListener("mousemove", drag)
         })
-        randFigure.addEventListener("mouseup", up => {
+        randFigure.addEventListener("mouseup", () => {
             window.removeEventListener("mousemove",drag)
             draggingFigure = null
         })

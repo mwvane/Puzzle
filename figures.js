@@ -1,5 +1,5 @@
 import Cube from "./cube.js"
-import Constant from "./constants.js"
+import constant from "./constants.js"
 export default class Figure {
     constructor(pattern) {
         this.Figures = this.renderFigures(pattern)
@@ -38,22 +38,22 @@ export default class Figure {
     }
 
     disable(figure){
-        let cubes = figure.childNodes
-        for(let cube of cubes){
-            cube.style.backgroundColor = Constant._DISABLED_CUBE_COLOR
-        }
+        this.#setColor(figure,constant._DISABLED_CUBE_COLOR)
     }
 
     clear(figure) {
-        let cubes = figure.childNodes
-        for(let cube of cubes){
-            cube.style.backgroundColor = Constant._EMPTY_CUBE_COLOR
-        }
+        this.#setColor(figure,constant._EMPTY_CUBE_COLOR)
     }
+    
     full(figure){
+        this.#setColor(figure,constant._FULL_CUBE_COLOR)
+    }
+
+    #setColor(figure,color){
         let cubes = figure.childNodes
         for(let cube of cubes){
-            cube.style.backgroundColor = Constant._FULL_CUBE_COLOR
+            cube.style.backgroundColor = color
         }
     }
+
 }
