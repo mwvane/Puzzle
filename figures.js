@@ -1,59 +1,58 @@
 import Cube from "./cube.js"
 import constant from "./constants.js"
-export default class Figure {
-    constructor(pattern) {
-        this.Figures = this.renderFigures(pattern)
+import Renderer from "./renderer.js"
+export default class Figure extends Renderer {
+    constructor(pattern, cubeSize) {
+        super()
+        this.cubeSize = cubeSize
+        this.element = this.renderFigure(pattern)
         this.draggable = false
         this.offsetX = 0
         this.offsetY = 0
+        this.code = pattern
     }
 
-    renderFigures(figures) {
-        let array = []
-        for (let figure of figures) {
-            let startX = 0
-            let startY = 0
-            let container = document.createElement("div")
-            container.style.position = 'relative'
-            for (let i = 0; i < figure.length; i++) {
-                if (figure[i] === '1') {
-                    let cube = new Cube(startX, startY, 20, 20, "#995D5D").element
-                    cube.style.position = "absolute"
-                    cube.style.borderRadius = "4px "
-                    cube.style.border = "1px solid black"
-                    container.append(cube)
-                    startX += 22
-                }
-                else if (figure[i] === 'n') {
-                    startY += 22
-                    startX = 0
-                }
-                else if (figure[i] === '0') {
-                    startX += 22
-                }
+    renderFigure(code) {
+        let startX = 0
+        let startY = 0
+        let container = document.createElement("div")
+        container.style.position = 'relative'
+
+        for (let i = 0; i < code.length; i++) {
+            if (code[i] === '1') {
+                let cube = new Cube()
+                cube.setBackgroundColor(constant._DEFAULT_FIGURE_COLOR)
+                cube.setWidth(this.cubeSize)
+                cube.setHeight(this.cubeSize)
+                cube.setTop(startY)
+                cube.setLeft(startX)
+                cube.element.className = "cube"
+                cube.element.style.position = "absolute"
+                container.append(cube.element)
+                startX += this.cubeSize + 2
             }
-            array.push(container)
+            else if (code[i] === 'n') {
+                startY += this.cubeSize + 2
+                startX = 0
+            }
+            else if (code[i] === '0') {
+                startX += this.cubeSize + 2
+            }
         }
-        return array
+
+        return container
     }
 
-    disable(figure){
-        this.#setColor(figure,constant._DISABLED_CUBE_COLOR)
+    disable(figure) {
+        // this.#setColor(figure.figure,constant._DISABLED_CUBE_COLOR)
     }
 
     clear(figure) {
-        this.#setColor(figure,constant._EMPTY_CUBE_COLOR)
-    }
-    
-    full(figure){
-        this.#setColor(figure,constant._FULL_CUBE_COLOR)
+        // this.#setColor(figure,constant._EMPTY_CUBE_COLOR)
     }
 
-    #setColor(figure,color){
-        let cubes = figure.childNodes
-        for(let cube of cubes){
-            cube.style.backgroundColor = color
-        }
+    full(figure) {
+        // this.#setColor(figure,constant._FULL_CUBE_COLOR)
     }
 
 }

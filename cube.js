@@ -1,23 +1,24 @@
 import constant from "./constants.js"
-export default class Cube {
-    constructor(x, y, w = constant._CUBE_WIDTH, h = constant._CUBE_HEIGHT, color = constant._EMPTY_CUBE_COLOR) {
-        this.width = w
-        this.height = h
-        this.color = color
-        this.isEmpty = true
-        this.x = x
-        this.y = y
+import helpers from "./helpers.js" 
+import Renderer from "./renderer.js"
+export default class Cube extends Renderer {
+    constructor() {
+        super()
         this.disabled = false
-        this.element = this.getCube()
+        this.element = this.getDefaultElement()
+        this._isEmpty = true
     }
-    getCube() {
+    getDefaultElement() {
         let cube = document.createElement("div")
-        cube.style.width = `${this.width}px`
-        cube.style.height = `${this.height}px`
-        cube.style.top = `${this.y}px`
-        cube.style.left = `${this.x}px`
-        cube.style.backgroundColor = this.color
+        cube.style.width = `${constant._CUBE_WIDTH}px`
+        cube.style.height = `${constant._CUBE_HEIGHT}px`
+        cube.style.backgroundColor = constant._EMPTY_CUBE_COLOR
         return cube
     }
+
+    get isEmpty() {
+        return this._isEmpty
+    }
+
 }
 

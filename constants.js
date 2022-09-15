@@ -6,6 +6,8 @@ export default {
     _FULL_CUBE_COLOR : "#92522E",
     _DISABLED_CUBE_COLOR : "#8C6E78",
 
+    _DEFAULT_FIGURE_COLOR : "#995D5D",
+
     _FIGURES :[
         // n = new line, 1 = cube ,  0 = space
         `1`,`11`,`111`,`1111`,`1111`,
