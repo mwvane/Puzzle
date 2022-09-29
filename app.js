@@ -9,22 +9,21 @@ let draggingFigure = null
 let tableCubes = []
 let startIndex = -1
 let scoreElement = document.getElementsByClassName('score')[0]
-let score = 0
-start()
-function start() {
+let score = 0;
+
+(function start() {
     let container = document.getElementsByClassName("cube-container")[0]
     drawTable(container)
     drawFigures()
-}
+})()
 function drawTable(parent) {
     let startX = 0
     let startY = 0
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            let cube = new Cube()
+            const cube = new Cube(startY, startX)
             cube.setTop(startY)
             cube.setLeft(startX)
-            cube.element.className = "cube"
             parent.append(cube.element)
             tableCubes.push(cube)
             startX += constant._CUBE_WIDTH + 4
@@ -35,9 +34,9 @@ function drawTable(parent) {
 }
 function drawFigures(quantity = 3) {
     currentFigures = []
-    let figureContainer = document.getElementsByClassName("figures-container")[0]
+    const figureContainer = document.getElementsByClassName("figures-container")[0]
     for (let i = 0; i < quantity; i++) {
-        let figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], 20)
+        const figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], 20)
         currentFigures.push(figure)
         figureContainer.append(figure.element)
         figure.element.addEventListener("mousedown", e => {
@@ -52,15 +51,12 @@ function drawFigures(quantity = 3) {
             window.addEventListener("mousemove", drag)
             window.addEventListener("mouseup", function tmpMouseup() {
                 window.removeEventListener("mouseup", tmpMouseup)
+                window.removeEventListener("mousemove", drag)
                 mouseUp()
             })
         })
-
-
     }
     console.log('drawfigures called');
-
-
 }
 
 function mouseUp() {
@@ -72,44 +68,56 @@ function mouseUp() {
         if (currentFigures.length == 0) {
             drawFigures()
         }
+    } else {
+        draggingFigure.remove() 
+        currentFigure.full()   
     }
-    window.removeEventListener("mousemove", drag)
 }
 
 function drag(e) {
+    updateDraggingFigure(e)
+    updateStartIndexAndHighlight(
+        getFIgureStartIndex(draggingFigure)
+    )
+}
+
+function updateDraggingFigure(e) {
     let figure = draggingFigure
     figure.element.style.position = "absolute"
     figure.setTop(e.pageY - figure.offsetY)
     figure.setLeft(e.pageX - figure.offsetX)
-    check(draggingFigure)
 }
 
-function check(figureObj) {
+function updateStartIndexAndHighlight(newStartIndex) {
+    if (newStartIndex !== null) {
+        startIndex = newStartIndex
+        if (isCompatible(newStartIndex)) {
+            hilight(draggingFigure.gridIndexes, startIndex)
+            return 
+        } 
+    }
+
+    unHilight(draggingFigure.gridIndexes)
+    startIndex = -1
+}
+
+function getFIgureStartIndex(figureObj) {
     let maxBottom = tableCubes[tableCubes.length - 1].absoluteBottom + 20
     let minLeft = tableCubes[0].absoluteLeft
     let maxRight = tableCubes[tableCubes.length - 1].absoluteRight + 80
     if (figureObj.absoluteBottom <= maxBottom) {
         if (figureObj.absoluteLeft >= minLeft && figureObj.absoluteRight <= maxRight) {
             for (let [index, cube] of tableCubes.entries()) {
-                if (cube.absoluteLeft <= figureObj.absoluteLeft + correction(figureObj) && cube.absoluteRight >= figureObj.absoluteLeft + correction(figureObj)) {
+                if (cube.absoluteLeft <= figureObj.absoluteLeft + correction(figureObj) &&
+                    cube.absoluteRight >= figureObj.absoluteLeft + correction(figureObj)) {
                     if (cube.absoluteTop <= figureObj.absoluteTop && cube.absoluteBottom >= figureObj.absoluteTop) {
-                        startIndex = index
-                        if (isCompatible(index)) {
-                            hilight(draggingFigure.gridIndexes, index)
-                        }
+                        return index 
                     }
                 }
             }
-        } else {
-            unHilight(draggingFigure.gridIndexes)
-            startIndex = -1
-        }
-
-    } else {
-        unHilight(draggingFigure.gridIndexes)
-        startIndex = -1
+        } 
     }
-
+    return null;
 }
 
 function correction(figureObj) {
@@ -124,6 +132,10 @@ function correction(figureObj) {
 }
 
 function isCompatible(startIndex) {
+    if (startIndex === -1) {
+        return false;
+    }
+
     for (let index of draggingFigure.gridIndexes) {
         if (tableCubes[startIndex + index]) {
             if (!tableCubes[startIndex + index].isEmpty) {
@@ -167,7 +179,6 @@ function putFigure() {
     }
     draggingFigure.remove()
     checkTable()
-
 }
 
 function removeFromArray(item, array) {
@@ -188,12 +199,12 @@ function checkTable() {
         if (isLineFull(tmpArrayV)) {
             indexes = indexes.concat(tmpArrayV)
         }
-        if(isLineFull(tmpArrayH)){
+        if (isLineFull(tmpArrayH)) {
             indexes = indexes.concat(tmpArrayH)
         }
     }
-    if(indexes.length > 0){
-    removeLine(indexes)
+    if (indexes.length > 0) {
+        removeLine(indexes)
     }
 }
 
@@ -208,12 +219,12 @@ function isLineFull(array) {
 
 function removeLine(array) {
     let counter = 0
-    setInterval(()=>{
-        if(counter < array.length){
+    setInterval(() => {
+        if (counter < array.length) {
             tableCubes[array[counter]].isEmpty = true
         }
         counter++
-    },15)
+    }, 15)
     score += array.length / 8
     scoreElement.innerHTML = `${score}`
 }

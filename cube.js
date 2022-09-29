@@ -13,6 +13,7 @@ export default class Cube extends Renderer {
         cube.style.width = `${constant._CUBE_WIDTH}px`
         cube.style.height = `${constant._CUBE_HEIGHT}px`
         cube.style.backgroundColor = constant._EMPTY_CUBE_COLOR
+        cube.classList.add('cube')
         return cube
     }
 
