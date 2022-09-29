@@ -21,9 +21,25 @@ let score = 0;
 function customizeBoard() {
     const mainContainer = document.querySelector('.main-container')
     const cubeContainer = document.querySelector('.cube-container')
+    const figuresContainer = document.querySelector('.figures-container')
     if (!constant._IS_MOBILE) {
         mainContainer.style.width = '540px'
-    }  
+    } else {
+        let minLeft = -1, maxRight = -1;
+        for (const cube of tableCubes) {
+            if (minLeft === -1 || cube.absoluteLeft < minLeft) {
+                minLeft = cube.absoluteLeft
+            }
+            if (maxRight === -1 || cube.absoluteRight > maxRight) {
+                maxRight = cube.absoluteRight
+            }
+        }
+        const width = maxRight - minLeft;
+        const offsetX = Math.floor((window.innerWidth - width) / 2)
+        cubeContainer.style.left = offsetX + "px"
+        cubeContainer.style.width = width + 'px';
+        figuresContainer.style.marginLeft = offsetX + 'px';
+    }
     const boardHeight = 8 * constant._CUBE_HEIGHT + (8 - 1) * 4 + 50
     cubeContainer.style.height = boardHeight + 'px'
 }

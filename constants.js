@@ -18,6 +18,9 @@ const IS_MOBILE = (function () {
     return false;
 })()
 
+const windowWidth = window.screen.width;
+const calculatedWidth = Math.floor((windowWidth - (8 - 1) * 4) / 8) 
+
 const OBJ = {
 
     _EMPTY_CUBE_COLOR: "#1E1E1E",
@@ -57,14 +60,14 @@ const OBJ = {
 
     _CUBE_WIDTH: (function(){
         if (IS_MOBILE) {
-            return 50
+            return calculatedWidth;
         }
         return 60
     })(),
 
     _CUBE_HEIGHT: (function(){
         if (IS_MOBILE) {
-            return 50;
+            return calculatedWidth;
         }
         return 60
     })(),
