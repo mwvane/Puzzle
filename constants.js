@@ -47,7 +47,7 @@ const OBJ = {
             return MOBILE_EVENTS;
         }
         return PC_EVENTS
-    })()
+    })(),
 }
 
 export default OBJ

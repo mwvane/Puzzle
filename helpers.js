@@ -1,3 +1,5 @@
+import constant from "./constants.js"
+
 export default {
 
     pxToNumber(px) {
@@ -14,5 +16,13 @@ export default {
             left: rect.left + window.scrollX,
             top: rect.top + window.scrollY
         };
+    },
+
+    getNecessaryEventObject(e) {
+        if (constant._IS_MOBILE) {
+            const obj = e.touches[0]
+            return obj 
+        }
+        return e
     }
 }

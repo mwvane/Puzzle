@@ -39,26 +39,30 @@ function drawFigures(quantity = 3) {
         const figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], 20)
         currentFigures.push(figure)
         figureContainer.append(figure.element)
-        for (const eventsObj of [constant._MOBILE_EVENTS, constant._PC_EVENTS]) {
-            figure.element.addEventListener(eventsObj.MOUSE_DOWN, e => {
-                currentFigure = figure
-                draggingFigure = new Figure(figure.code, constant._CUBE_WIDTH)
-                document.body.append(draggingFigure.element)
-                draggingFigure.offsetX = e.pageX - figure.absoluteLeft
-                draggingFigure.offsetY = e.pageY - figure.absoluteTop
-                draggingFigure.setLeft(e.clientX - draggingFigure.offsetX)
-                draggingFigure.setTop(-draggingFigure.offsetY)
-                figure.disable()
-                document.body.addEventListener(eventsObj.MOUSE_MOVE, drag)
-                document.body.addEventListener(eventsObj.MOUSE_UP, function tmpMouseup() {
-                    document.body.removeEventListener(eventsObj.MOUSE_UP, tmpMouseup)
-                    document.body.removeEventListener(eventsObj.MOUSE_MOVE, drag)
-                    mouseUp()
-                })
+        figure.element.addEventListener(constant._EVENTS.MOUSE_DOWN, e => {
+            const eventObject = helpers.getNecessaryEventObject(e)
+            currentFigure = figure
+            draggingFigure = new Figure(figure.code, constant._CUBE_WIDTH)
+            document.body.append(draggingFigure.element)
+            draggingFigure.offsetX = eventObject.pageX - figure.absoluteLeft
+            draggingFigure.offsetY = eventObject.pageY - figure.absoluteTop
+            draggingFigure.setLeft(eventObject.clientX - draggingFigure.offsetX)
+            draggingFigure.setTop(-draggingFigure.offsetY)
+            figure.disable()
+            document.body.addEventListener(constant._EVENTS.MOUSE_MOVE, mutateDrag)
+            document.body.addEventListener(constant._EVENTS.MOUSE_UP, function tmpMouseup() {
+                document.body.removeEventListener(constant._EVENTS.MOUSE_UP, tmpMouseup)
+                document.body.removeEventListener(constant._EVENTS.MOUSE_MOVE, mutateDrag)
+                mouseUp()
             })
-        }
+        })
     }
     console.log('drawfigures called');
+}
+
+function mutateDrag(e) {
+    const eventObject = helpers.getNecessaryEventObject(e)
+    drag(eventObject)
 }
 
 function mouseUp() {
@@ -71,8 +75,8 @@ function mouseUp() {
             drawFigures()
         }
     } else {
-        draggingFigure.remove() 
-        currentFigure.full()   
+        draggingFigure.remove()
+        currentFigure.full()
     }
 }
 
@@ -95,8 +99,8 @@ function updateStartIndexAndHighlight(newStartIndex) {
         startIndex = newStartIndex
         if (isCompatible(newStartIndex)) {
             hilight(draggingFigure.gridIndexes, startIndex)
-            return 
-        } 
+            return
+        }
     }
 
     unHilight(draggingFigure.gridIndexes)
@@ -113,11 +117,11 @@ function getFIgureStartIndex(figureObj) {
                 if (cube.absoluteLeft <= figureObj.absoluteLeft + correction(figureObj) &&
                     cube.absoluteRight >= figureObj.absoluteLeft + correction(figureObj)) {
                     if (cube.absoluteTop <= figureObj.absoluteTop && cube.absoluteBottom >= figureObj.absoluteTop) {
-                        return index 
+                        return index
                     }
                 }
             }
-        } 
+        }
     }
     return null;
 }
