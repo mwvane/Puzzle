@@ -7,6 +7,7 @@ body{
     background-color: #293039;
     color: white;
     overflow: hidden;
+    user-select: none !important;
 }
 header{
     background-color: #0E1318;
@@ -36,7 +37,6 @@ header{
     position: absolute;
 }
 .figures-container{
-    background-color: red;
     bottom: 10px;
     height: 100px;
     width: 40%;

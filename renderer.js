@@ -84,4 +84,7 @@ export default class Renderer{
             this.element.style.backgroundColor = value
         }
     }
+    remove(){
+        this.element.remove()
+    }
 }
