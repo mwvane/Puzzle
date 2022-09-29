@@ -19,8 +19,7 @@ const IS_MOBILE = (function () {
 })()
 
 const OBJ = {
-    _CUBE_WIDTH: 60,
-    _CUBE_HEIGHT: 60,
+
     _EMPTY_CUBE_COLOR: "#1E1E1E",
     _FULL_CUBE_COLOR: "#92522E",
     _DISABLED_CUBE_COLOR: "#8C6E78",
@@ -48,6 +47,28 @@ const OBJ = {
         }
         return PC_EVENTS
     })(),
+
+    _BLOCK_WIDTH: (function() {
+        if (IS_MOBILE) {
+            return 20
+        }
+        return 20 
+    })(),
+
+    _CUBE_WIDTH: (function(){
+        if (IS_MOBILE) {
+            return 50
+        }
+        return 60
+    })(),
+
+    _CUBE_HEIGHT: (function(){
+        if (IS_MOBILE) {
+            return 50;
+        }
+        return 60
+    })(),
+
 }
 
 export default OBJ

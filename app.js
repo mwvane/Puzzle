@@ -15,7 +15,19 @@ let score = 0;
     let container = document.getElementsByClassName("cube-container")[0]
     drawTable(container)
     drawFigures()
+    customizeBoard()
 })()
+
+function customizeBoard() {
+    const mainContainer = document.querySelector('.main-container')
+    const cubeContainer = document.querySelector('.cube-container')
+    if (!constant._IS_MOBILE) {
+        mainContainer.style.width = '540px'
+    }  
+    const boardHeight = 8 * constant._CUBE_HEIGHT + (8 - 1) * 4 + 50
+    cubeContainer.style.height = boardHeight + 'px'
+}
+
 function drawTable(parent) {
     let startX = 0
     let startY = 0
@@ -36,7 +48,7 @@ function drawFigures(quantity = 3) {
     currentFigures = []
     const figureContainer = document.getElementsByClassName("figures-container")[0]
     for (let i = 0; i < quantity; i++) {
-        const figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], 20)
+        const figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], constant._BLOCK_WIDTH)
         currentFigures.push(figure)
         figureContainer.append(figure.element)
         figure.element.addEventListener(constant._EVENTS.MOUSE_DOWN, e => {

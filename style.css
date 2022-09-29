@@ -26,15 +26,12 @@ header {
 
 .main-container {
     margin: auto;   
-    width: 540px;
-    height: 540px;
     display: block;
     padding: 6px;
 }
 
 .cube-container {
     width: 100%;
-    min-height: 540px;
     position: relative;
 }
 
