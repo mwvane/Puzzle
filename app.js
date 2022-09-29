@@ -48,10 +48,10 @@ function drawFigures(quantity = 3) {
             draggingFigure.setLeft(e.clientX - draggingFigure.offsetX)
             draggingFigure.setTop(-draggingFigure.offsetY)
             figure.disable()
-            window.addEventListener(constant._EVENTS.MOUSE_MOVE, drag)
-            window.addEventListener(constant._EVENTS.MOUSE_UP, function tmpMouseup() {
-                window.removeEventListener(constant._EVENTS.MOUSE_UP, tmpMouseup)
-                window.removeEventListener(constant._EVENTS.MOUSE_MOVE, drag)
+            document.addEventListener(constant._EVENTS.MOUSE_MOVE, drag)
+            document.addEventListener(constant._EVENTS.MOUSE_UP, function tmpMouseup() {
+                document.removeEventListener(constant._EVENTS.MOUSE_UP, tmpMouseup)
+                document.removeEventListener(constant._EVENTS.MOUSE_MOVE, drag)
                 mouseUp()
             })
         })
