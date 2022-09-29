@@ -39,7 +39,7 @@ function drawFigures(quantity = 3) {
         const figure = new Figure(constant._FIGURES[helpers.getRandomNUmber(0, constant._FIGURES.length)], 20)
         currentFigures.push(figure)
         figureContainer.append(figure.element)
-        figure.element.addEventListener("mousedown", e => {
+        figure.element.addEventListener(constant._EVENTS.MOUSE_DOWN, e => {
             currentFigure = figure
             draggingFigure = new Figure(figure.code, constant._CUBE_WIDTH)
             document.body.append(draggingFigure.element)
@@ -48,10 +48,10 @@ function drawFigures(quantity = 3) {
             draggingFigure.setLeft(e.clientX - draggingFigure.offsetX)
             draggingFigure.setTop(-draggingFigure.offsetY)
             figure.disable()
-            window.addEventListener("mousemove", drag)
-            window.addEventListener("mouseup", function tmpMouseup() {
-                window.removeEventListener("mouseup", tmpMouseup)
-                window.removeEventListener("mousemove", drag)
+            window.addEventListener(constant._EVENTS.MOUSE_MOVE, drag)
+            window.addEventListener(constant._EVENTS.MOUSE_UP, function tmpMouseup() {
+                window.removeEventListener(constant._EVENTS.MOUSE_UP, tmpMouseup)
+                window.removeEventListener(constant._EVENTS.MOUSE_MOVE, drag)
                 mouseUp()
             })
         })
