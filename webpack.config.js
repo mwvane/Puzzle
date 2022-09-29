@@ -8,5 +8,4 @@ module.exports = {
         filename: 'build.js',
         path: path.join(__dirname, './dist/build.js')
     },
-    watch: true,
 }
