@@ -6,8 +6,8 @@
 body {
     background-color: #293039;
     color: white;
-    overflow: hidden;
     user-select: none !important;
+    overflow: hidden;
 }
 
 header {

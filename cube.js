@@ -1,5 +1,4 @@
 import constant from "./constants.js"
-import helpers from "./helpers.js"
 import Renderer from "./renderer.js"
 export default class Cube extends Renderer {
     constructor() {
@@ -21,10 +20,10 @@ export default class Cube extends Renderer {
         return this._isEmpty
     }
     set isEmpty(value) {
-        if(value){
+        if (value) {
             this.setBackgroundColor(constant._EMPTY_CUBE_COLOR)
         }
-        else{
+        else {
             this.setBackgroundColor(constant._FULL_CUBE_COLOR)
 
         }

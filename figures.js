@@ -34,7 +34,7 @@ export default class Figure extends Renderer {
             }
             else if (code[i] === 'n') {
                 startY += this.cubeSize + 2
-                if(figureWidth == 0){
+                if (figureWidth == 0) {
                     figureWidth = startX
                 }
                 startX = 0
@@ -51,11 +51,6 @@ export default class Figure extends Renderer {
     disable() {
         this.#setBackgrounColor(constant._DISABLED_CUBE_COLOR)
     }
-
-    clear(figure) {
-        // this.#setColor(figure,constant._EMPTY_CUBE_COLOR)
-    }
-
     full(figure) {
         this.#setBackgrounColor(constant._DEFAULT_FIGURE_COLOR)
     }
@@ -76,7 +71,7 @@ export default class Figure extends Renderer {
                         indexes.push(0)
                         firsOneIndex = j
                     }
-                    else if(lines[i][j] === '1' && firsOneIndex > -1){
+                    else if (lines[i][j] === '1' && firsOneIndex > -1) {
                         indexes.push(j - firsOneIndex)
                     }
                 }
@@ -84,7 +79,7 @@ export default class Figure extends Renderer {
             else {
                 for (let j = 0; j < lines[i].length; j++) {
                     if (lines[i][j] === '1') {
-                        indexes.push(8*i + j - firsOneIndex)
+                        indexes.push(8 * i + j - firsOneIndex)
                     }
                 }
             }

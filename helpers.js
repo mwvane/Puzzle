@@ -21,7 +21,7 @@ export default {
     getNecessaryEventObject(e) {
         if (constant._IS_MOBILE) {
             const obj = e.touches[0]
-            return obj 
+            return obj
         }
         return e
     }

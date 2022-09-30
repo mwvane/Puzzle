@@ -85,7 +85,6 @@ function drawFigures(quantity = 3) {
             })
         })
     }
-    console.log('drawfigures called');
 }
 
 function mutateDrag(e) {
@@ -94,7 +93,6 @@ function mutateDrag(e) {
 }
 
 function mouseUp() {
-    console.log("mose up calledd is start index ", startIndex);
     if (isCompatible(startIndex)) {
         putFigure()
         currentFigure.remove()
